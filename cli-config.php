@@ -7,7 +7,10 @@ $doctrine_settings = $settings['settings']['doctrine'];
 
 $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
     $doctrine_settings['metadata']['paths'],
-    $doctrine_settings['dev_mode']
+    $doctrine_settings['dev_mode'],
+    $doctrine_settings['metadata']['proxy_dir'],
+    null,
+    false
 );
 
 $em = \Doctrine\ORM\EntityManager::create(

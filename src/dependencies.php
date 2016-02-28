@@ -24,7 +24,10 @@ $container['entity_manager'] = function ($c) {
 
     $config = Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
         $settings['metadata']['paths'],
-        $settings['dev_mode']
+        $settings['dev_mode'],
+        $settings['metadata']['proxy_dir'],
+        null,
+        false
     );
 
     $em = \Doctrine\ORM\EntityManager::create(
@@ -32,4 +35,14 @@ $container['entity_manager'] = function ($c) {
         $config
     );
     return $em;
+};
+
+// album manager
+$container['albums'] = function ($c) {
+    $spotify_manager = new \SpotifyApp\Service\SpotifyManager();
+    $album_manager = new \SpotifyApp\Service\AlbumManager(
+        $c['entity_manager'],
+        $spotify_manager
+    );
+    return $album_manager;
 };
