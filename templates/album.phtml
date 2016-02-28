@@ -1,0 +1,112 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Slim 3</title>
+    <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            margin: 50px 0 0 0;
+            padding: 0;
+            width: 100%;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            text-align: center;
+            color: #aaa;
+            font-size: 18px;
+        }
+
+        h1 {
+            color: #719e40;
+            letter-spacing: -3px;
+            font-family: 'Lato', sans-serif;
+            font-size: 100px;
+            font-weight: 200;
+            margin-bottom: 0;
+        }
+    </style>
+
+    <script type="text/javascript">
+        $(function(){
+            $('button.audio').click(function(){
+                $("audio").trigger("pause");
+                var id = $(this).data('track-id');
+                $("#" + id).trigger('play');
+            });
+
+            $('button.stop').click(function(){
+                $("audio").trigger("pause");
+            });
+        });
+    </script>
+</head>
+<body>
+<h1>Spotify</h1>
+<div>Search for music</div>
+
+<form action="/spotify" method="POST">
+    <input type="submit" value="Search"/>
+    <input type="text" name="search"/>
+</form>
+
+<?php use SpotifyApp\Model\Album;
+/** @var Album $album */
+?>
+<div class="container">
+    <div class="page-header">
+        <h2><?=$album->getName()?></h2>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4">
+            <img src="<?=$album->getPhotoPreview()?>"/>
+        </div>
+        <div class="col-xs-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Track Name</th>
+                        <th>Duration</th>
+                        <th>Sample</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($album->getTracks() as $track) {?>
+                    <tr>
+                        <td>
+                            <?=$track->getName()?>
+                            <?php if($track->getExplicit()) { ?>
+                                <span class="badge">explicit</span>
+                            <?php } ?>
+                        </td>
+                        <td>
+                            <?=number_format($track->getDurationMs() / 1000 / 60, 2)?> min
+                        </td>
+                        <td>
+                            <audio id="<?=$track->getId()?>">
+                                <source src="<?=$track->getPreviewUrl()?>" type="audio/ogg">
+                                Your browser does not support the audio element.
+                            </audio>
+                            <button type="button" data-track-id="<?=$track->getId()?>" class="audio btn btn-default btn-xs"><span class="glyphicon glyphicon-play" aria-hidden="true"></span> play</button>
+                            <button type="button" data-track-id="<?=$track->getId()?>" class="stop btn btn-default btn-xs"><span class="glyphicon glyphicon-stop" aria-hidden="true"></span> stop</button>
+                        </td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

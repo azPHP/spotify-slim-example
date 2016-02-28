@@ -16,6 +16,12 @@
         "slim/slim": "^3.1",
         "slim/php-view": "^2.0",
         "monolog/monolog": "^1.17",
-        "doctrine/orm": "^2.5"
+        "doctrine/orm": "^2.5",
+        "guzzlehttp/guzzle": "^5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "SpotifyApp\\": "src"
+        }
     }
 }

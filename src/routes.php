@@ -1,18 +1,26 @@
 <?php
 // Routes
-
-use Doctrine\ORM\EntityManager;
+use Slim\Http\Request;
 use Slim\Http\Response;
 
 
-$app->get('/spotify', function($request, Response $response, $args) {
-    /** @var EntityManager $em */
-    $em = $this->entity_manager;
-    return $response->write(print_r(
-        $em->getConnection()
-            ->executeQuery("select date('now')")
-            ->fetchColumn(),
-        true));
+$app->map(['GET','POST'], '/spotify', function(Request $request, Response $response, $args) {
+    $data = ['albums' => null];
+
+    if($request->isPost() && $search = $request->getParam('search'))
+    {
+        $data['albums'] = $this->albums->search($search);
+    }
+
+    return $this->renderer->render($response, 'spotify.phtml', $data);
+});
+
+$app->get('/spotify/album/{id}', function(Request $request, Response $response, $args) {
+    $id = $args['id'];
+
+    $album = $this->albums->getAlbum($id);
+
+    return $this->renderer->render($response, 'album.phtml', ['album' => $album]);
 });
 
 $app->get('/[{name}]', function ($request, $response, $args) {

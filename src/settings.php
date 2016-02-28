@@ -21,7 +21,9 @@ return [
                 'path'   => __DIR__ . '/../data/album.sqlite'
             ],
             'metadata' => [
-                'paths' => [],
+                'paths' => [
+                    __DIR__ . '/Model'
+                ],
                 'proxy_dir' => __DIR__ . '/../data/proxies'
             ],
             'dev_mode' => true,

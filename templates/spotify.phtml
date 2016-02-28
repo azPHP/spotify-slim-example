@@ -1,0 +1,69 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Slim 3</title>
+    <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 50px 0 0 0;
+            padding: 0;
+            width: 100%;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            text-align: center;
+            color: #aaa;
+            font-size: 18px;
+        }
+
+        h1 {
+            color: #719e40;
+            letter-spacing: -3px;
+            font-family: 'Lato', sans-serif;
+            font-size: 100px;
+            font-weight: 200;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+<h1>Spotify</h1>
+<div>Search for music</div>
+
+    <form action="/spotify" method="POST">
+        <input type="submit" value="Search"/>
+        <input type="text" name="search"/>
+    </form>
+
+<?php use SpotifyApp\Model\Album;
+
+if (!empty($albums)) : ?>
+    <div class="container">
+        <div class="row">
+    <?php
+    /** @var Album $album */
+    foreach($albums as $i => $album) { ?>
+        <?php if($i != 0 && ($i % 4) == 0) {?>
+            </div><div class="row">
+        <?php } ?>
+        <div class="col-xs-3">
+            <img src="<?=$album->getPhotoPreview()?>" class="col-xs-12"/>
+            <span class="label label-primary"><?=$album->getAlbumType()?></span><br/>
+            <p><a href="/spotify/album/<?=$album->getId()?>"><?=$album->getName()?></a></p>
+        </div>
+    <?php
+    }
+    ?>
+        </div>
+    </div>
+<?php endif; ?>
+</body>
+</html>
