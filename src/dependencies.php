@@ -2,6 +2,8 @@
 // DIC configuration
 
 
+use SpotifyApp\Controller\Example;
+
 $container = $app->getContainer();
 
 // view renderer
@@ -45,4 +47,9 @@ $container['albums'] = function ($c) {
         $spotify_manager
     );
     return $album_manager;
+};
+
+$container['l33t_controller'] = function ($c){
+    $controller = new Example();
+    return [$controller, 'l33t'];
 };

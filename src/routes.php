@@ -30,6 +30,14 @@ $app->group('/spotify', function() {
 })->add(new BasicAuthentication(['azphp' => 'group']));
 
 
+$app->get('/foo/{placeholder}', '\SpotifyApp\Controller\Example:foo');
+
+$app->get('/power/{placeholder}', '\SpotifyApp\Controller\Example');
+
+$app->get('/l33t/{placeholder}', 'l33t_controller');
+
+$app->get('/bar/{placeholder}', [new \SpotifyApp\Controller\Example(), 'bar']);
+
 $app->get('/[{name}]', function ($request, $response, $args) {
     // Sample log message
     $this->logger->info("Slim-Skeleton '/' route");
@@ -37,3 +45,4 @@ $app->get('/[{name}]', function ($request, $response, $args) {
     // Render index view
     return $this->renderer->render($response, 'index.phtml', $args);
 });
+
