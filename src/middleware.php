@@ -1,4 +1,8 @@
 <?php
 // Application middleware
+use Psr7Middlewares\Middleware\BasicAuthentication;
+use Psr7Middlewares\Middleware\ResponseTime;
 
-// e.g: $app->add(new \Slim\Csrf\Guard);
+$app->add(new BasicAuthentication(['azphp' => 'group']));
+
+$app->add(new ResponseTime);

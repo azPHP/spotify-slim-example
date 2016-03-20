@@ -17,7 +17,8 @@
         "slim/php-view": "^2.0",
         "monolog/monolog": "^1.17",
         "doctrine/orm": "^2.5",
-        "guzzlehttp/guzzle": "^5.3"
+        "guzzlehttp/guzzle": "^5.3",
+        "oscarotero/psr7-middlewares": "^3.14"
     },
     "autoload": {
         "psr-4": {
