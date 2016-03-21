@@ -18,7 +18,10 @@
         "monolog/monolog": "^1.17",
         "doctrine/orm": "^2.5",
         "guzzlehttp/guzzle": "^5.3",
-        "oscarotero/psr7-middlewares": "^3.14"
+        "oscarotero/psr7-middlewares": "^3.14",
+        "symfony/console": "~2.1",
+        "behat/behat": "^3.0",
+        "phpunit/phpunit": "^4.8"
     },
     "autoload": {
         "psr-4": {
