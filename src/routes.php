@@ -4,6 +4,7 @@ use Psr7Middlewares\Middleware\BasicAuthentication;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use SpotifyApp\Routing\PowerRoute;
 
 $app->group('/spotify', function() {
     /** @var App $app */
@@ -32,7 +33,7 @@ $app->group('/spotify', function() {
 
 $app->get('/foo/{placeholder}', '\SpotifyApp\Controller\Example:foo');
 
-$app->get('/power/{placeholder}', '\SpotifyApp\Controller\Example');
+PowerRoute::apply($app);
 
 $app->get('/l33t/{placeholder}', 'l33t_controller');
 

@@ -9,9 +9,10 @@ use Psr\Http\Message\ResponseInterface;
 
 class Example
 {
+    const CATCH_PHRASE_PATTERN = 'By the power of <b>%s</b>, I have the power!!!';
     public function __invoke(RequestInterface $request, ResponseInterface $response, $args = [])
     {
-        $response->getBody()->write(sprintf("By the power of <b>%s</b>, I have the power!!!", $args['placeholder']));
+        $response->getBody()->write(sprintf(static::CATCH_PHRASE_PATTERN, $args['placeholder']));
         return $response;
     }
 
